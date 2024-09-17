@@ -31,15 +31,11 @@ COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/public ./public
 
-# Copy entrypoint script
-COPY entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
-
 # Set environment variables
 ENV NODE_ENV production
 
 # Expose the port the app runs on
 EXPOSE 3000
 
-# Run the entrypoint script
-ENTRYPOINT ["/app/entrypoint.sh"]
+# Start the application
+CMD ["npm", "start"]
