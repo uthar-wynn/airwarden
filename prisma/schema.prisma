@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Locations {
+  id               String  @id @default(uuid())
+  site_code        String  @unique
+  address_1        String?
+  zip_code         String?
+  city             String?
+  itinerary        String? @db.LongText
+  access_procedure String? @db.LongText
+  comments         String? @db.LongText
+  enabled          Boolean @default(true)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  monitors Monitors[]
+  Logbook  Logbook[]
+}
+
+model Monitors {
+  id            String  @id @default(uuid())
+  location_id   String
+  monitor_name  String  @unique
+  serial_number String?
+  type          String?
+  make          String?
+  model         String?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  location Locations @relation(fields: [location_id], references: [id])
+  Logbook  Logbook[]
+}
+
+model Logbook {
+  id          String   @id @default(uuid())
+  location_id String
+  monitor_id  String
+  user_name   String   @db.Text
+  date        DateTime
+  title       String
+  solution    String?  @db.LongText
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  location Locations @relation(fields: [location_id], references: [id])
+  monitor  Monitors  @relation(fields: [monitor_id], references: [id])
+}
+
+enum ACTION {
+  CREATE
+  UPDATE
+  DELETE
+}
+
+enum ENTITY_TYPE {
+  LOCATION
+  MONITOR
+  LOG
+}
+
+model AuditLog {
+  id           String      @id @default(uuid())
+  action       ACTION
+  entity_id    String
+  entity_type  ENTITY_TYPE
+  entity_title String
+  user_id      String
+  user_image   String      @db.Text
+  user_name    String      @db.Text
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}

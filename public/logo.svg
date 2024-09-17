@@ -1,0 +1,13 @@
+<svg width="150" height="56" viewBox="0 0 150 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background Circle representing clean air -->
+    <circle cx="20" cy="28" r="18" fill="#00BFFF"/>
+    <!-- Book Icon representing logbook and administration -->
+    <rect x="28" y="14" width="20" height="28" fill="#fff"/>
+    <rect x="30" y="16" width="16" height="24" fill="#00BFFF"/>
+    <line x1="36" y1="20" x2="44" y2="20" stroke="#fff" stroke-width="2"/>
+    <line x1="36" y1="26" x2="44" y2="26" stroke="#fff" stroke-width="2"/>
+    <line x1="36" y1="32" x2="44" y2="32" stroke="#fff" stroke-width="2"/>
+    <line x1="36" y1="38" x2="44" y2="38" stroke="#fff" stroke-width="2"/>
+    <!-- Title Text -->
+    <text x="60" y="35" font-family="Arial, sans-serif" font-size="24" fill="#00BFFF">AirLog</text>
+</svg>
