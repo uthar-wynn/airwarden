@@ -8,6 +8,7 @@ import { Monitors } from "@prisma/client"
 import { Row } from "@tanstack/react-table"
 import axios from "axios"
 import { Ellipsis, Pencil, Trash2 } from "lucide-react"
+import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { monitorSchema } from "./schema"
 
@@ -18,6 +19,7 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
     row
 }: DataTableRowActionsProps<TData>) {
+    const router = useRouter()
     const monitor = monitorSchema.parse(row.original)
     const { onOpen } = useModal()
 
@@ -33,6 +35,7 @@ export function DataTableRowActions<TData>({
             await axios.delete(`/api/monitors/${monitor.id}`)
                 .then(() => {
                     toast.success("Monitor is met succes verwijderd!")
+                    router.refresh()
                 })
                 .catch(() => toast.error("Er is iets fout gelopen bij het verwijderen van deze monitor"))
         } catch (error) {

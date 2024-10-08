@@ -1,22 +1,14 @@
-"use client"
-
-import { z } from "zod";
-
-const formSchema = z.object({
-    site_code: z.string().length(4),
-    address_1: z.optional(z.string()),
-    zip_code: z.optional(z.string()),
-    city: z.optional(z.string()),
-    itinerary: z.optional(z.string()),
-    access_procedure: z.optional(z.string()),
-    comments: z.optional(z.string()),
-    enabled: z.boolean()
-})
+import { AddLocation } from "./_components/add-location";
 
 const LocationsCreatePage = () => {
     return (
-        <div>
-            Create Locations
+        <div className="flex flex-col">
+            <div className="flex-1 space-y-4 p-8 pt-6">
+                <h2 className="text-2xl font-bold tracking-tight">
+                    Locatie toevoegen
+                </h2>
+            </div>
+            <AddLocation />
         </div>
     )
 }

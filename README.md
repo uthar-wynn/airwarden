@@ -9,11 +9,11 @@ First, copy the `.env.example` to `.env` and fill in the neccesary variables:
 - **Clerk**: Create an account with [`Clerk`](https://clerk.com/) and obtain your Clerk API Keys. Add these keys to the `.env` file:
 
 ```bash
-CLERK_PUBLISHABLE_KEY=your-clerk-publishable-key
-CLERK_SECRET_KEY=your-clerk-secret-key
+CLERK_PUBLISHABLE_KEY=<your-clerk-publishable-key>
+CLERK_SECRET_KEY=<your-clerk-secret-key>
 ```
 
-- **DATABASE_URL**:  Set up your database and provide the database URL in the `.env` file (this example is for MySQL, you can change it if you want, but don't forget to change the prisma.schema):
+- **DATABASE_URL**:  Set up your database and provide the database URL in the `.env` file (this example is for MySQL, you can change it if you want. Don't forget to change the prisma.schema):
 
 ```bash
 DATABASE_URL=mysql://username:password@localhost:3306/your-database

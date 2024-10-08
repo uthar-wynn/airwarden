@@ -3,11 +3,10 @@
 import { ConfirmModal } from "@/components/modals/confirm-modal"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { useModal } from "@/hooks/use-modal-store"
-import { Locations } from "@prisma/client"
 import { Row } from "@tanstack/react-table"
 import axios from "axios"
 import { Ellipsis, Pencil, Trash2 } from "lucide-react"
+import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { locationSchema } from "./schema"
 
@@ -18,21 +17,15 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
     row
 }: DataTableRowActionsProps<TData>) {
+    const router = useRouter()
     const location = locationSchema.parse(row.original)
-    const { onOpen } = useModal()
-
-    const onAction = async (e: React.MouseEvent) => {
-        e.stopPropagation()
-        const response = await axios.get(`/api/locations/${location.id}`)
-        const newLocation = response.data as Locations
-        onOpen("editLocation", { location: newLocation })
-    }
 
     const onRemove = async () => {
         try {
             await axios.delete(`/api/locations/${location.id}`)
                 .then(() => {
                     toast.success("Locatie is met succes verwijderd!")
+                    router.refresh()
                 })
                 .catch(() => toast.error("Er is iets fout gelopen bij het verwijderen van deze locatie"))
         } catch (error) {
@@ -52,7 +45,7 @@ export function DataTableRowActions<TData>({
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-40">
-                <DropdownMenuItem onClick={(e) => onAction(e)}>
+                <DropdownMenuItem onClick={() => router.push(`/locations/${location.id}/edit`)}>
                     <div className="flex items-center">
                         <Pencil className="size-4 mr-2" />
                         Bewerken
